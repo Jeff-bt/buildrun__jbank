@@ -1,15 +1,15 @@
 package dev.jeff.jbank.controller;
 
 import dev.jeff.jbank.controller.dto.CreateWalletDto;
+import dev.jeff.jbank.controller.dto.DepositMoneyDto;
 import dev.jeff.jbank.service.WalletService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/wallets")
@@ -26,5 +26,26 @@ public class WalletController {
         var wallet = walletService.createWallet(body);
 
         return ResponseEntity.created(URI.create("/wallets/" + wallet.getWalletId().toString())).build();
+    }
+
+    @DeleteMapping(path = "{walletId}")
+    public ResponseEntity<Void> deleteWallet(@PathVariable("walletId") UUID walletId) {
+        Boolean isDeleted = walletService.deleteWallet(walletId);
+
+        return isDeleted ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
+    }
+
+    @PostMapping(path = "/{walletId}/deposits")
+    public ResponseEntity<Void> depositMoney(@PathVariable("walletId") UUID walletId,
+                                             @RequestBody @Valid DepositMoneyDto body,
+                                             HttpServletRequest servletRequest) {
+        walletService.depositMoney(
+                walletId,
+                body,
+                servletRequest.getParameter("x-user-ip"));
+
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,17 +1,12 @@
 package dev.jeff.jbank.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "tb_wallets")
 public class Wallet {
 
@@ -27,6 +22,9 @@ public class Wallet {
     private String name;
     @Column(name = "balance")
     private BigDecimal balance;
+
+    public Wallet() {
+    }
 
     public UUID getWalletId() {
         return walletId;

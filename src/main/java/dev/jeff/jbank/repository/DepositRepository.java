@@ -1,14 +1,12 @@
 package dev.jeff.jbank.repository;
 
-import dev.jeff.jbank.entity.Wallet;
+import dev.jeff.jbank.entity.Deposit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface WalletRepository extends JpaRepository<Wallet, UUID> {
+public interface DepositRepository extends JpaRepository<Deposit, UUID> {
 
-
-    Boolean existsByCpfOrEmailAllIgnoreCase(String cpf, String email);
 }

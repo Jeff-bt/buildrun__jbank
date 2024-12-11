@@ -2,11 +2,11 @@ package dev.jeff.jbank.exception;
 
 import org.springframework.http.ProblemDetail;
 
-public class WalletDataAlreadyExistsException extends JBankException {
+public class DeleteWalletException extends JBankException {
 
     private String detail;
 
-    public WalletDataAlreadyExistsException(String detail) {
+    public DeleteWalletException(String detail) {
         super(detail);
         this.detail = detail;
     }
@@ -15,7 +15,7 @@ public class WalletDataAlreadyExistsException extends JBankException {
     public ProblemDetail toProblemDetail() {
         var pd = ProblemDetail.forStatus(422);
 
-        pd.setTitle("Wallet data already exists");
+        pd.setTitle("You cannot delete this walllet");
         pd.setDetail(detail);
 
         return pd;
