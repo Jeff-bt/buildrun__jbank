@@ -2,6 +2,7 @@ package dev.jeff.jbank.controller;
 
 import dev.jeff.jbank.controller.dto.CreateWalletDto;
 import dev.jeff.jbank.controller.dto.DepositMoneyDto;
+import dev.jeff.jbank.controller.dto.StatementDto;
 import dev.jeff.jbank.service.WalletService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -47,5 +48,16 @@ public class WalletController {
                 servletRequest.getParameter("x-user-ip"));
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{walletId}/statements")
+    public ResponseEntity<StatementDto> getStatements(@PathVariable("walletId") UUID walletId,
+                                                      @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                      @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize,
+                                                      @RequestParam(name = "OrderBy", defaultValue = "desc") String orderBy) {
+
+        var statement = walletService.getStatements(walletId, page, pageSize);
+
+        return ResponseEntity.ok(statement);
     }
 }

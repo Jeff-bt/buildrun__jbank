@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Transfer {
 
     @Id
-    @Column(name = "tranfer_id")
+    @Column(name = "transfer_id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID transferId;
 
